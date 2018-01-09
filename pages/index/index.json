@@ -1,0 +1,5 @@
+{
+  "usingComponents": {
+    "ContentWapper": "../../components/ContentWapper/ContentWapper"
+  }
+}

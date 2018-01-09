@@ -1,0 +1,5 @@
+/* components/Dialog.wxss */
+.content-wrapper{
+  height: 100%;
+  font-size: 14px;
+}

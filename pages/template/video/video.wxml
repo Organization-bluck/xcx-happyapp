@@ -1,0 +1,5 @@
+<template name="video">
+  <view class='video-wrapper'>
+    视频
+  </view>
+</template>

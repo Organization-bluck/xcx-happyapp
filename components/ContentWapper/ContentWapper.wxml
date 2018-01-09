@@ -1,0 +1,4 @@
+<!--components/Dialog.wxml-->
+  <scroll-view scroll-y="{{true}}" class='content-wrapper'>
+    <slot></slot>
+  </scroll-view>

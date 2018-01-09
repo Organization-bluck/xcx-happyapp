@@ -1,0 +1,30 @@
+<!--index.wxml-->
+<loading hidden="{{hiddenLoading}}">拼命加载中</loading>
+<view class="mod-test">
+    <view class="title">
+        <view wx:for="{{tabs}}" data-id="{{index}}" wx:key="{{index}}" wx:for-item="tab" class="tab{{index == currentTab ? ' active' : ''}}" bindtap="changeItem">{{tab}}</view>
+    </view>
+    <swiper current="{{currentTab}}" class="content" bindchange="itemChange" duration="{{duration}}">
+      <swiper-item class="item">
+        <!-- <template is="news" data="{{...girlList}}"/> -->
+      </swiper-item>
+      <swiper-item class="item">
+        <ContentWapper id="ContentWapper">
+          <view class='pic-wrapper'>
+            <block wx:for="{{girlList}}" wx:key="{{girlList._id}}" wx:for-item="item">
+              <image src='{{item.url}}' bindtap="imgYu" data-src="{{item.url}}"/>
+            </block>
+          </view>
+        </ContentWapper>
+      </swiper-item>
+      <swiper-item class="item">
+        <ContentWapper id="ContentWapper">
+          <view class='video-wrapper'>
+            <view class='video-item'>
+            <video id="myVideo" class='myVideo' poster="https://www.yingshangyan.com/static/theme/default/img/default.jpg" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"></video>
+            </view>
+          </view>
+        </ContentWapper>
+      </swiper-item>
+    </swiper>
+</view>

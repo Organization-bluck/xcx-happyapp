@@ -1,0 +1,9 @@
+<import src="../pic/pic.wxml"/>
+
+<template name="pages">
+  <scroll-view scroll-y="{{true}}" class='pic-wrapper'>
+    <view wx:for="{{girlList}}" wx:key="{{item._id}}" class='item-pic'> 
+       <template is="pic" data="{{...item}}"/> 
+    </view>
+  </scroll-view>
+</template>

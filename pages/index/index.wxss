@@ -1,0 +1,62 @@
+/**index.wxss**/
+.mod-test {
+    height: 100%;
+}
+.mod-test .title {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-around;
+    height: 80rpx;
+}
+.mod-test .title .tab {
+    position: relative;
+    height: 80rpx;
+    color: #ccc;
+    line-height: 80rpx;
+}
+.mod-test .title .tab.active {
+    color: #515151;
+    transition: all 0.5s ease-in;
+}
+.mod-test .title .tab.active::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 5rpx;
+    width: 100%;
+    background-color: #ccc;
+}
+
+.mod-test .content {
+    position: fixed;
+    top: 100rpx;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+}
+.pic-wrapper{
+  display: flex;
+  flex-direction:row;
+  flex-wrap:wrap;
+  padding-bottom: 120rpx;
+}
+.pic-wrapper image{
+  width: 50%;
+  padding: 2rpx;
+  box-sizing: border-box;
+  border-radius: 10rpx;
+}
+
+.video-wrapper{
+  display: flex;
+  flex-direction: column
+}
+.video-item{
+  margin-bottom: 10rpx;
+}
+video{
+  width: 100%
+}

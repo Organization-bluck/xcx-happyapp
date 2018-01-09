@@ -1,0 +1,8 @@
+.pic-wrapper{
+  height:100%;
+}
+.item-pic{
+  width: 50%;
+  float: left;
+  height: 400rpx
+}

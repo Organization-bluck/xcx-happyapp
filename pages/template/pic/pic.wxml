@@ -1,0 +1,3 @@
+<template name="pic">
+   <image lazy-load="{{true}}" src='{{url}}' class='img'/>
+</template>
