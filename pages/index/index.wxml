@@ -1,8 +1,8 @@
 <!--index.wxml-->
 <loading hidden="{{hiddenLoading}}">拼命加载中</loading>
 <view class="mod-test">
-    <view class="title">
-        <view wx:for="{{tabs}}" data-id="{{index}}" wx:key="{{index}}" wx:for-item="tab" class="tab{{index == currentTab ? ' active' : ''}}" bindtap="changeItem">{{tab}}</view>
+    <view class="navTab">
+        <view wx:for="{{tabs}}" data-id="{{index}}" wx:key="{{index}}" wx:for-item="tab" class="tab {{index == currentTab ? ' active' : ''}}" bindtap="changeItem">{{tab}}</view>
     </view>
     <swiper current="{{currentTab}}" class="content" bindchange="itemChange" duration="{{duration}}">
       <swiper-item class="item">
@@ -20,9 +20,17 @@
       <swiper-item class="item">
         <ContentWapper id="ContentWapper">
           <view class='video-wrapper'>
-            <view class='video-item'>
-            <video id="myVideo" class='myVideo' poster="https://www.yingshangyan.com/static/theme/default/img/default.jpg" src="http://wxsnsdy.tc.qq.com/105/20210/snsdyvideodownload?filekey=30280201010421301f0201690402534804102ca905ce620b1241b726bc41dcff44e00204012882540400&bizid=1023&hy=SH&fileparam=302c020101042530230204136ffd93020457e3c4ff02024ef202031e8d7f02030f42400204045a320a0201000400"></video>
+            <view class='video-item' wx:for="{{videoList}}" wx:key="{{item.id}}" wx:for-item="item">
+              <video id="myVideo" class='myVideo' poster="{{item.bimageuri}}" src="{{item.videouri}}" style='width:{{videoWidth}}px;height:{{videoHeight}}px'></video>
+              <view class='video-info'>
+                <text class='title ellipsis-multi-line'>{{item.text}}</text>
+                <view class='reading'>
+                  <image src='../../images/eye-icon.png'/>
+                  <text class='viewing'>{{item.playcount}}</text>
+                </view>
+              </view>
             </view>
+            <!-- <view class='load-more'>加载更多</view> -->
           </view>
         </ContentWapper>
       </swiper-item>

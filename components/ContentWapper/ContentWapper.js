@@ -1,4 +1,5 @@
 // components/Dialog.js
+import util from '../../utils/util.js'
 Component({
   options: {
     multipleSlots: true // 在组件定义时的选项中启用多slot支持
@@ -28,6 +29,9 @@ Component({
     /*
      * 公有方法
      */
+    loadMore(){
+      console.log('loadMore')
+    },
 
     //隐藏弹框
     hideDialog() {

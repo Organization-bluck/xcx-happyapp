@@ -4,9 +4,9 @@ import config from '../../utils/config.js'
 import util from '../../utils/util.js'
 import Mock from '../mock/mock.js'
 const app = getApp()
+const RequestApi = 'http://route.showapi.com/255-1'
 
 
-const girlApi = 'http://gank.io/api/data/福利/'
 Page({
   data: {
     tabs: ['新鲜事', '妹子图', '短视频'],
@@ -15,6 +15,9 @@ Page({
     girl_pageNum: 1,
     girl_size: 10,
     girlList: [],
+    videoList:[],
+    videoWidth:0,
+    videoHeight: 255,
     hiddenLoading:true,
     poster: 'https://www.yingshangyan.com/static/theme/default/img/default.jpg'
   },
@@ -28,6 +31,9 @@ Page({
     });
     if (this.data.currentTab == 1) {
       this.init();
+    }
+    if (e.detail.current == 2) {
+      this.videoInit();
     }
   },
   changeItem: function (e) {
@@ -48,45 +54,59 @@ Page({
     })
   },
   onLoad() {
-    // this.init();
+    // 设置视频宽度和页面宽度相同减去间距
+    var that = this;
+    wx.getSystemInfo({
+      success: function(res) {
+        let windowWidth = res.windowWidth - 10;
+        that.setData({
+          videoWidth: windowWidth,
+        })
+      },
+    });
   },
   init() {
     let girl_pageNum = this.data.girl_pageNum;
     let girl_size = this.data.girl_size;
+    let girlList = this.data.girlList;
+    if (girlList.length) {
+      return
+    }
     this.setData({
-      hiddenLoading:false
+      hiddenLoading: false
     })
     util.request({
       url: Mock.girllist,
       mock: true,
     }).then(res => {
-      let girlList = res.results;
-      let imgList = girlList.map(item => {
+      let girlListResult = res.results;
+      let imgList = girlListResult.map(item => {
         return item.url
       })
       this.setData({
         hiddenLoading:true,
-        girlList,
+        girlList: girlListResult,
         imgList
       })
     })
   },
-  // onPullDownRefresh(){
-  //   wx.showNavigationBarLoading()
-  //   let currentIndex = this.data.currentTab;
-  //   // switch (currentIndex){
-  //   //   case 0:
-  //   //     break;
-  //   //   case 1:
-  //   //     this.init();
-  //   //     break;
-  //   //   case 2:
-  //   //     break;
-  //   // }
-  //   setTimeout(function () {
-  //     // complete
-  //     wx.hideNavigationBarLoading() //完成停止加载
-  //     wx.stopPullDownRefresh() //停止下拉刷新
-  //   }, 500);
-  // }
+  videoInit(){
+    let videoList = this.data.videoList;
+    if (videoList.length) {
+      return
+    }
+    this.setData({
+      hiddenLoading: false
+    })
+    util.request({
+      url: Mock.videoList,
+      mock: true,
+    }).then(res => {
+      let videoListResult = res.results;
+      this.setData({
+        hiddenLoading: true,
+        videoList: videoListResult
+      })
+    })
+  }
 })

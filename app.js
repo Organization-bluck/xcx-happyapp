@@ -34,6 +34,14 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    showapi_appid:'27982',
+    showapi_sign: '495a1755b3184e4f8dfe30f818eb1a5e',
+    type:{
+      img:'10',
+      text:'29',
+      voice:'31',
+      video:'41'
+    }
   }
 })
