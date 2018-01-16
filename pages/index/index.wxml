@@ -4,29 +4,35 @@
     <view class="navTab">
         <view wx:for="{{tabs}}" data-id="{{index}}" wx:key="{{index}}" wx:for-item="tab" class="tab {{index == currentTab ? ' active' : ''}}" bindtap="changeItem">{{tab}}</view>
     </view>
-    <swiper current="{{currentTab}}" class="content" bindchange="itemChange" duration="{{duration}}">
+    <swiper current="{{currentTab}}" class="content" bindchange="itemChange" duration="{{duration}}" style='height:{{swiperHeight}}px'>
       <swiper-item class="item">
-        <!-- <template is="news" data="{{...girlList}}"/> -->
-      </swiper-item>
-      <swiper-item class="item">
-        <ContentWapper id="ContentWapper">
-          <view class='pic-wrapper'>
-            <block wx:for="{{girlList}}" wx:key="{{girlList._id}}" wx:for-item="item">
-              <image src='{{item.url}}' bindtap="imgYu" data-src="{{item.url}}"/>
+        <ContentWapper id="ContentWapper"  bind:loadMore="loadMoreData">
+          <view class='text-wrapper'>
+            <block wx:for="{{textList}}" wx:key="{{textList.id}}" wx:for-item="item">
+              <view class='text-content'>{{item.text}}</view>
             </block>
           </view>
         </ContentWapper>
       </swiper-item>
       <swiper-item class="item">
-        <ContentWapper id="ContentWapper">
+        <ContentWapper id="ContentWapper" bind:loadMore="loadMoreData">
+          <view class='pic-wrapper'>
+            <block wx:for="{{girlList}}" wx:key="{{girlList._id}}" wx:for-item="item">
+              <image src='{{item.image0}}' bindtap="imgYu" data-src="{{item.image0}}"/>
+            </block>
+          </view>
+        </ContentWapper>
+      </swiper-item>
+      <swiper-item class="item">
+        <ContentWapper id="ContentWapper" bind:loadMore="loadMoreData">
           <view class='video-wrapper'>
             <view class='video-item' wx:for="{{videoList}}" wx:key="{{item.id}}" wx:for-item="item">
-              <video id="myVideo" class='myVideo' poster="{{item.bimageuri}}" src="{{item.videouri}}" style='width:{{videoWidth}}px;height:{{videoHeight}}px'></video>
+              <video id="myVideo" class='myVideo' src="{{item.video_uri}}" style='width:{{videoWidth}}px;height:{{videoHeight}}px'></video>
               <view class='video-info'>
                 <text class='title ellipsis-multi-line'>{{item.text}}</text>
                 <view class='reading'>
                   <image src='../../images/eye-icon.png'/>
-                  <text class='viewing'>{{item.playcount}}</text>
+                  <text class='viewing'>{{item.love}}</text>
                 </view>
               </view>
             </view>

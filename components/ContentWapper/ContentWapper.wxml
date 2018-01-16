@@ -1,4 +1,4 @@
-<!--components/Dialog.wxml-->
-  <scroll-view scroll-y="{{true}}" class='content-wrapper' lower-threshold="5" bindscrolltolower="loadMore">
-    <slot></slot>
-  </scroll-view>
+<!--components/Dialog.wxml -->
+<scroll-view class='content-wrapper' scroll-y lower-threshold="5" bindscrolltolower="loadMore">
+  <slot></slot>
+</scroll-view>

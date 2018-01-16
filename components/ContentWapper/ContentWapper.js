@@ -30,7 +30,7 @@ Component({
      * 公有方法
      */
     loadMore(){
-      console.log('loadMore')
+      this.triggerEvent("loadMore")
     },
 
     //隐藏弹框

@@ -26,6 +26,15 @@ const alert = (title = '提示', content = '好像哪里出了小问题~ 请再�
     content: content
   })
 }
+//loading提示
+
+const showLoading = (title = "数据加载中", duration = 1000) => {
+  wx.showToast({
+    title: title,
+    icon: 'loading',
+    duration: (duration <= 0) ? 5000 : duration
+  });
+}
 
 //http 请求
 const DEFAULT_REQUEST_OPTIONS = {
@@ -113,5 +122,6 @@ module.exports = {
   request,
   setStorageData,
   getStorageData,
-  alert
+  alert,
+  showLoading
 }
