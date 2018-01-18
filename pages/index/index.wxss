@@ -68,7 +68,20 @@
   flex-wrap: wrap;
   padding-bottom: 100rpx;
 }
+.pic-wrapper .random-btn{
+  position: fixed;
+  right: 20rpx;
+  bottom: 50px;
+  width: 80rpx;
+  height: 80rpx;
+  line-height: 80rpx;
+  border-radius: 50%;
+  background-color: rgba(15, 149, 80, 0.6);
+  color: #fff;
+  text-align: center;
 
+  z-index: 999
+}
 .pic-wrapper image {
   width: 50%;
   padding: 2rpx;
@@ -95,6 +108,7 @@
   flex-direction: row;
   justify-content: space-between;
   padding: 10rpx 20rpx;
+  min-height: 38px;
 }
 
 .video-info .reading {

@@ -18,8 +18,9 @@
         <ContentWapper id="ContentWapper" bind:loadMore="loadMoreData">
           <view class='pic-wrapper'>
             <block wx:for="{{girlList}}" wx:key="{{girlList._id}}" wx:for-item="item">
-              <image src='{{item.image0}}' bindtap="imgYu" data-src="{{item.image0}}"/>
+              <image src='{{item.url}}' bindtap="imgYu" data-src="{{item.url}}"/>
             </block>
+            <view class='random-btn' bindtap='randomLoad'>随机</view>
           </view>
         </ContentWapper>
       </swiper-item>
@@ -27,7 +28,7 @@
         <ContentWapper id="ContentWapper" bind:loadMore="loadMoreData">
           <view class='video-wrapper'>
             <view class='video-item' wx:for="{{videoList}}" wx:key="{{item.id}}" wx:for-item="item">
-              <video id="myVideo" class='myVideo' src="{{item.video_uri}}" style='width:{{videoWidth}}px;height:{{videoHeight}}px'></video>
+              <video id="myVideo" id="{{item.id}}" class='myVideo' src="{{item.video_uri}}" style='width:{{videoWidth}}px;height:{{videoHeight}}px' bindplay="videoPlay" bindended="videoEnd"></video>
               <view class='video-info'>
                 <text class='title ellipsis-multi-line'>{{item.text}}</text>
                 <view class='reading'>
