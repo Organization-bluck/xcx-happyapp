@@ -1,5 +1,0 @@
-<template name="news">
-  <view class='news-wrapper'>
-    新闻
-  </view>
-</template>

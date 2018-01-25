@@ -1,4 +1,7 @@
 /**app.wxss**/
+
+@import "./utils/wxParse/wxParse.wxss";
+
 .ellipsis {
   overflow: hidden;
   white-space: nowrap;

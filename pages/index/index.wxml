@@ -7,6 +7,23 @@
     <swiper current="{{currentTab}}" class="content" bindchange="itemChange" duration="{{duration}}" style='height:{{swiperHeight}}px'>
       <swiper-item class="item">
         <ContentWapper id="ContentWapper"  bind:loadMore="loadMoreData">
+          <view class='article-wrapper'>
+             <block wx:for="{{newsList}}" wx:key="{{newsList.uniquekey}}" wx:for-item="item"> 
+              <view class="article-content {{ item.hasVisited ? 'visited' : '' }}" bindtap='showDetail' data-contenturl='{{ item.url }}' data-contentid='{{ item.uniquekey }}'>
+                <view class='article-info ellipsis-multi-line ellipsis-line-4'>
+                  {{item.title}}
+                  <view class='author'>{{ item.author_name }}</view>
+                  <view class='date'>{{ item.date }}</view>
+                </view>
+                <image src='{{ item.thumbnail_pic_s || "../../images/default.png" }}'/>
+              </view>
+             </block> 
+          </view>
+        </ContentWapper>
+      </swiper-item>
+
+      <swiper-item class="item">
+        <ContentWapper id="ContentWapper"  bind:loadMore="loadMoreData">
           <view class='text-wrapper'>
             <block wx:for="{{textList}}" wx:key="{{textList.id}}" wx:for-item="item">
               <view class='text-content'>{{item.text}}</view>
@@ -15,7 +32,7 @@
         </ContentWapper>
       </swiper-item>
       <swiper-item class="item">
-        <ContentWapper id="ContentWapper" bind:loadMore="loadMoreData">
+        <ContentWapper id="ContentWapper" bind:loadMore="loadMoreData" scroll-top="{{ scrollTop }}">
           <view class='pic-wrapper'>
             <block wx:for="{{girlList}}" wx:key="{{girlList._id}}" wx:for-item="item">
               <image src='{{item.url}}' bindtap="imgYu" data-src="{{item.url}}"/>

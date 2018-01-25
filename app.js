@@ -1,7 +1,11 @@
 //app.js
+import util from './utils/util.js';
 App({
   onLaunch: function () {
-    
+    // 增加初始化缓存数据功能
+    util.getStorageData('visited', (data) => {
+      this.globalData.visitedArticles = data;
+    });
     // 登录
     wx.login({
       success: res => {
@@ -38,6 +42,7 @@ App({
       text:'29',
       voice:'31',
       video:'41'
-    }
+    },
+    visitedArticles:''
   }
 })

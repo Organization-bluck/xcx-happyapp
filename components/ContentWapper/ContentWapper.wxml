@@ -1,4 +1,4 @@
 <!--components/Dialog.wxml -->
-<scroll-view class='content-wrapper' scroll-y lower-threshold="5" bindscrolltolower="loadMore">
+<scroll-view class='content-wrapper' scroll-y lower-threshold="5" scroll-top="{{ scrollTop }}" enable-back-to-top="true" bindscrolltolower="loadMore">
   <slot></slot>
 </scroll-view>

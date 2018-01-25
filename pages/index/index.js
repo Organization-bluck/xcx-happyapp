@@ -8,14 +8,18 @@ const baseApi = 'https://www.yingshangyan.com/api/commen/getUrlContent';
 const RequestApi = 'https://route.showapi.com/255-1';
 const girlApi = 'http://gank.io/api/data/福利/20/';
 const randomgirlApi = 'http://gank.io/api/random/data/福利/20'
+
+const getNewsApi = 'https://www.yingshangyan.com/api/news/getlist';
+
 const urlParams = {
   showapi_appid: "54360",
   showapi_sign: "28bd99df05ef49dca94cf538276fc278"
 }
 let page = 1;//页码
-const types = ["29", "10", "41", "31"];
+const types = ["0","29", "10", "41", "31"];
 //1->全部;41->视频;10->图片;29->段子;31->声音;
 var DATATYPE = {
+  a:"",
   ALLDATATYPE: "1",
   VIDEODATATYPE: "41",
   PICTUREDATATYPE: "10",
@@ -23,10 +27,9 @@ var DATATYPE = {
   VOICEDATATYPE: "31"
 };
 
-
 Page({
   data: {
-    tabs: ['段子', '妹子图', '短视频'],
+    tabs: ['新闻','段子', '妹子图', '短视频'],
     currentTab: 0,
     duration: 200,
     girl_pageNum: 1,
@@ -34,11 +37,13 @@ Page({
     girlList: [],
     videoList: [],
     textList: [],
+    newsList:[],
     videoWidth: 0,
     videoHeight: 255,
     hiddenLoading: true,
     poster: 'https://www.yingshangyan.com/static/theme/default/img/default.jpg',
-    swiperHeight: "0"
+    swiperHeight: "0",
+    scrollTop: 0,
   },
   onReady() {
     //获得组件
@@ -57,7 +62,7 @@ Page({
     this.setData({
       currentTab: e.detail.current
     });
-    if (this.data.currentTab == 1) {
+    if (this.data.currentTab == 2) {
       this.getGirlData();
       return
     }
@@ -70,7 +75,7 @@ Page({
     this.setData({
       currentTab: e.target.dataset.id
     });
-    if (this.data.currentTab == 1) {
+    if (this.data.currentTab == 2) {
       this.getGirlData();
       return
     }
@@ -129,7 +134,94 @@ Page({
       },
     });
 
-    this.refreshNewData();
+    // this.refreshNewData();
+    this.getNewsData();
+  },
+  //获取新闻信息
+  getNewsData(){
+    let that = this;
+    util.request({
+      url: getNewsApi
+    }).then(res => {
+      let dataList = res.data;
+      let formatData = this.formatArticleData(dataList);
+      that.setData({
+        newsList: formatData
+      })
+      setTimeout(() => {
+        wx.hideNavigationBarLoading();
+        wx.hideToast();
+      }, 1000);
+    })
+  },
+  //格式化新闻数据
+  formatArticleData(data){
+    let formatData = undefined;
+    if (data && data.length) {
+      formatData = data.map((item) => {
+        // 格式化日期
+        item.formateDate = item.date.slice(0, 10);
+        // 判断是否已经访问过
+        item.hasVisited = this.isVisited(item.uniquekey);
+        return item
+      })
+    }
+    return formatData;
+  },
+  /*
+  * 判断文章是否访问过 ,判断此文章id 是否存在在全局变量数组 visitedArticles 中，如果存在则访问过
+  * @param contentId
+  */
+  isVisited(contentId) {
+    let visitedArticles = app.globalData && app.globalData.visitedArticles || '';
+    return visitedArticles.indexOf(`${contentId}`) > -1;
+  },
+  // 详情页
+  showDetail(e){
+    let contentUrl = e.currentTarget.dataset.contenturl
+    let contentId = e.currentTarget.dataset.contentid
+    // 调用实现阅读标识的函数
+    this.markRead(contentId)
+    wx.navigateTo({
+      url: `../detail/detail?contentUrl=${contentUrl}`
+    });
+  },
+  // 阅读标识的函数
+  markRead(contentId) {
+    //先从缓存中查找 visited 字段对应的所有文章 contentId 数据
+    util.getStorageData('visited', (data) => {
+      let newStorage = data;
+      if (data) {
+        //如果当前的文章 contentId 不存在，也就是还没有阅读，就把当前的文章 contentId 拼接进去
+        if (data.indexOf(contentId) === -1) {
+          newStorage = `${data},${contentId}`;
+        }
+      }
+      // 如果还没有阅读 visited 的数据，那说明当前的文章是用户阅读的第一篇，直接赋值就行了 
+      else {
+        newStorage = `${contentId}`;
+      }
+
+      /*
+      * 处理过后，如果 data(老数据) 与 newStorage(新数据) 不一样，说明阅读记录发生了变化
+      * 不一样的话，我们就需要把新的记录重新存入缓存和 globalData 中 
+      */
+      if (data !== newStorage) {
+        if (app.globalData) {
+          app.globalData.visitedArticles = newStorage;
+        }
+        util.setStorageData('visited', newStorage, () => {
+          this.resetArticles();
+        });
+      }
+    });
+  },
+  resetArticles(){
+    let old = this.data.newsList;
+    let newArticles = this.formatArticleData(old);
+    this.setData({
+      newsList: newArticles
+    });
   },
   refreshNewData() {
     let that = this;
@@ -221,7 +313,15 @@ Page({
     wx.showNavigationBarLoading();
     var that = this;
     page += 1;
-    if(this.data.currentTab == 1){
+    if (this.data.currentTab == 0) {
+      setTimeout(() => {
+        wx.hideNavigationBarLoading();
+        wx.hideToast();
+      }, 1000);
+      console.log("加载更多新闻")
+      return
+    }
+    if(this.data.currentTab == 2){
       this.loadGirlData(page)
       return
     }
@@ -338,10 +438,9 @@ Page({
         return item.url
       })
       that.setData({
-        imgList
-      })
-      that.setData({
-        girlList: res.data.results
+        imgList,
+        girlList: dataList,
+        scrollTop:0
       })
       setTimeout(() => {
         wx.hideNavigationBarLoading();

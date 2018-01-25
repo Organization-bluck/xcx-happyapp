@@ -46,6 +46,45 @@
   
 }
 
+.article-wrapper{
+  display: flex;
+  flex-direction: column;
+padding-bottom: 100rpx;
+}
+.article-content{
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  box-shadow: 0 0 5px #969696;
+  margin: 10rpx 20rpx;
+}
+.article-content.visited{
+  color: #999;
+}
+.article-content image{
+  width: 300rpx;
+  height: 240rpx;
+  flex: 0 0 300rpx;
+}
+.article-content .article-info{
+  flex: 1;
+  margin-right: 20rpx;
+  display: flex;
+  font-size: 18px;
+  position: relative
+}
+.article-content .article-info .author,.article-content .article-info .date{
+  position: absolute;
+  bottom: 0;
+  font-size: 12px;
+}
+.article-content .article-info .author{
+  left: 0;  
+}
+.article-content .article-info .date{
+  right: 0;
+}
+
 .text-wrapper {
   display: flex;
   flex-direction: row;
